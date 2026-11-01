@@ -1,0 +1,23 @@
+diff --git a/backend/src/InvoiceApp.Api/InMemoryInvoiceRepository.cs b/backend/src/InvoiceApp.Api/InMemoryInvoiceRepository.cs
+--- a/backend/src/InvoiceApp.Api/InMemoryInvoiceRepository.cs
++++ b/backend/src/InvoiceApp.Api/InMemoryInvoiceRepository.cs
+@@ -25,18 +25,4 @@ public class InMemoryInvoiceRepository : IInvoiceRepository
+     public Invoice? GetById(string id)
+     {
+-        lock (_lock)
+-        {
+-            var invoice = _invoices.FirstOrDefault(i => i.Id == id);
+-            return invoice is null ? null : new Invoice
+-            {
+-                Id = invoice.Id,
+-                CustomerName = invoice.CustomerName,
+-                Amount = invoice.Amount,
+-                Status = invoice.Status,
+-                CreatedAt = invoice.CreatedAt,
+-                DecidedBy = invoice.DecidedBy,
+-                DecidedAt = invoice.DecidedAt,
+-                DecisionNote = invoice.DecisionNote
+-            };
+-        }
++        lock (_lock) return _invoices.FirstOrDefault(i => i.Id == id);
+     }
