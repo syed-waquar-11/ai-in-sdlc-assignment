@@ -1,0 +1,23 @@
+{
+  "version": 1,
+  "hooks": {
+    "agentStop": [
+      {
+        "type": "command",
+        "bash": "python3 -B tools/auto_export_ai_log.py",
+        "powershell": "python -B .\\tools\\auto_export_ai_log.py",
+        "cwd": ".",
+        "timeoutSec": 30
+      }
+    ],
+    "sessionEnd": [
+      {
+        "type": "command",
+        "bash": "python3 -B tools/auto_export_ai_log.py",
+        "powershell": "python -B .\\tools\\auto_export_ai_log.py",
+        "cwd": ".",
+        "timeoutSec": 30
+      }
+    ]
+  }
+}

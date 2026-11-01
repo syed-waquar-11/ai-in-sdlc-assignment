@@ -1,0 +1,21 @@
+diff --git a/backend/tests/InvoiceApp.Tests/ApprovalServiceTests.cs b/backend/tests/InvoiceApp.Tests/ApprovalServiceTests.cs
+--- a/backend/tests/InvoiceApp.Tests/ApprovalServiceTests.cs
++++ b/backend/tests/InvoiceApp.Tests/ApprovalServiceTests.cs
+@@ -41,5 +41,17 @@ public class ApprovalServiceTests
+     }
+ 
+     [Fact]
++    public void Approve_SequentialSecondDecisionIsRejected()
++    {
++        var service = ServiceFor(InvoiceWith("INV-1", InvoiceStatus.PendingApproval));
++        var approved = service.Approve("INV-1", "first-approver");
++
++        Assert.Throws<InvalidOperationException>(() =>
++            service.Approve("INV-1", "second-approver"));
++        Assert.Equal(InvoiceStatus.Approved, approved.Status);
++        Assert.Equal("first-approver", approved.DecidedBy);
++    }
++
++    [Fact]
+     public void Approve_RejectsInvoiceThatIsStillADraft()
+     {

@@ -1,0 +1,49 @@
+run,case,model,prompt_version,verdict,finding_summary,confidence_reported,notes,raw_response
+baseline-1,case-01,gpt-6-luna,v1,caught,Nullable Ids can throw,high,,raw\baseline-run-1-case-01.txt
+baseline-1,case-02,gpt-6-luna,v1,caught,SQL injection,high,,raw\baseline-run-1-case-02.txt
+baseline-1,case-03,gpt-6-luna,v1,caught,Incorrect monetary rounding,medium,,raw\baseline-run-1-case-03.txt
+baseline-1,case-04,gpt-6-luna,v1,clean,No findings,,,raw\baseline-run-1-case-04.txt
+baseline-1,case-05,gpt-6-luna,v1,caught,Delete lacks admin restriction,85%,,raw\baseline-run-1-case-05.txt
+baseline-1,case-06,gpt-6-luna,v1,clean,No findings,,,raw\baseline-run-1-case-06.txt
+baseline-1,case-07,gpt-6-luna,v1,caught,Full invoice and user logged,high,Logging-risk classification depends on policy assumption,raw\baseline-run-1-case-07.txt
+baseline-1,case-08,gpt-6-luna,v1,caught,Unsafe concurrent dictionary operations,high,,raw\baseline-run-1-case-08.txt
+baseline-1,case-09,gpt-6-luna,v1,caught,Logout does not reset sample data,80%,Ground truth requires context withheld from reviewer,raw\baseline-run-1-case-09.txt
+baseline-1,case-10,gpt-6-luna,v1,caught,Exception masked as success,high,,raw\baseline-run-1-case-10.txt
+baseline-1,case-11,gpt-6-luna,v1,caught,Stored mutable reference exposed,high,,raw\baseline-run-1-case-11.txt
+baseline-1,case-12,gpt-6-luna,v1,clean,No findings,,,raw\baseline-run-1-case-12.txt
+baseline-2,case-01,gpt-6-luna,v1,caught,Nullable Ids can throw,high,,raw\baseline-run-2-case-01.txt
+baseline-2,case-02,gpt-6-luna,v1,caught,SQL injection,high,,raw\baseline-run-2-case-02.txt
+baseline-2,case-03,gpt-6-luna,v1,caught,Incorrect monetary rounding,medium,,raw\baseline-run-2-case-03.txt
+baseline-2,case-04,gpt-6-luna,v1,false alarm,Potential named-argument source compatibility,medium,Conditional source-compatibility concern; no named caller found in checkout,raw\baseline-run-2-case-04.txt
+baseline-2,case-05,gpt-6-luna,v1,caught,Delete lacks admin restriction,high (0.92),,raw\baseline-run-2-case-05.txt
+baseline-2,case-06,gpt-6-luna,v1,clean,No findings,,,raw\baseline-run-2-case-06.txt
+baseline-2,case-07,gpt-6-luna,v1,caught,Full invoice and user logged,high,Logging-risk classification depends on policy assumption,raw\baseline-run-2-case-07.txt
+baseline-2,case-08,gpt-6-luna,v1,caught,Unsafe concurrent dictionary operations,high,,raw\baseline-run-2-case-08.txt
+baseline-2,case-09,gpt-6-luna,v1,caught,Logout does not reset sample data,80%,Ground truth requires context withheld from reviewer,raw\baseline-run-2-case-09.txt
+baseline-2,case-10,gpt-6-luna,v1,caught,Exception masked as success,high,,raw\baseline-run-2-case-10.txt
+baseline-2,case-11,gpt-6-luna,v1,caught,Stored mutable reference exposed,high,,raw\baseline-run-2-case-11.txt
+baseline-2,case-12,gpt-6-luna,v1,clean,No findings,,,raw\baseline-run-2-case-12.txt
+baseline-3,case-01,gpt-6-luna,v1,caught,Nullable Ids can throw,high,,raw\baseline-run-3-case-01.txt
+baseline-3,case-02,gpt-6-luna,v1,caught,SQL injection,high,,raw\baseline-run-3-case-02.txt
+baseline-3,case-03,gpt-6-luna,v1,caught,Incorrect monetary rounding,high,,raw\baseline-run-3-case-03.txt
+baseline-3,case-04,gpt-6-luna,v1,false alarm,Potential named-argument source compatibility,medium,Conditional source-compatibility concern; no named caller found in checkout,raw\baseline-run-3-case-04.txt
+baseline-3,case-05,gpt-6-luna,v1,caught,Delete lacks admin restriction,high,,raw\baseline-run-3-case-05.txt
+baseline-3,case-06,gpt-6-luna,v1,clean,No findings,,,raw\baseline-run-3-case-06.txt
+baseline-3,case-07,gpt-6-luna,v1,caught,Full invoice and user logged,high,Logging-risk classification depends on policy assumption,raw\baseline-run-3-case-07.txt
+baseline-3,case-08,gpt-6-luna,v1,caught,Unsafe concurrent dictionary operations,high,,raw\baseline-run-3-case-08.txt
+baseline-3,case-09,gpt-6-luna,v1,caught,Logout does not reset sample data,90%,Ground truth requires context withheld from reviewer,raw\baseline-run-3-case-09.txt
+baseline-3,case-10,gpt-6-luna,v1,caught,Exception masked as success,high,,raw\baseline-run-3-case-10.txt
+baseline-3,case-11,gpt-6-luna,v1,caught,Stored mutable reference exposed,high,,raw\baseline-run-3-case-11.txt
+baseline-3,case-12,gpt-6-luna,v1,clean,No findings,,,raw\baseline-run-3-case-12.txt
+changed-1,case-01,gpt-6-luna,v2,caught,Nullable Ids can throw,high; medium for conditional second finding,,raw\changed-run-1-case-01.txt
+changed-1,case-02,gpt-6-luna,v2,caught,SQL injection,high,,raw\changed-run-1-case-02.txt
+changed-1,case-03,gpt-6-luna,v2,caught,Incorrect monetary rounding,medium,,raw\changed-run-1-case-03.txt
+changed-1,case-04,gpt-6-luna,v2,clean,No findings,,,raw\changed-run-1-case-04.txt
+changed-1,case-05,gpt-6-luna,v2,caught,Delete lacks admin restriction,medium,,raw\changed-run-1-case-05.txt
+changed-1,case-06,gpt-6-luna,v2,clean,No findings,,,raw\changed-run-1-case-06.txt
+changed-1,case-07,gpt-6-luna,v2,caught,Full invoice and user logged,medium-high,Logging-risk classification depends on policy assumption,raw\changed-run-1-case-07.txt
+changed-1,case-08,gpt-6-luna,v2,caught,Unsafe concurrent dictionary operations,high,,raw\changed-run-1-case-08.txt
+changed-1,case-09,gpt-6-luna,v2,missed,Could not verify reset claim from diff alone,,Ground truth requires context withheld from reviewer,raw\changed-run-1-case-09.txt
+changed-1,case-10,gpt-6-luna,v2,caught,Exception masked as success,high,,raw\changed-run-1-case-10.txt
+changed-1,case-11,gpt-6-luna,v2,caught,Stored mutable reference exposed,high,,raw\changed-run-1-case-11.txt
+changed-1,case-12,gpt-6-luna,v2,clean,No findings,,,raw\changed-run-1-case-12.txt

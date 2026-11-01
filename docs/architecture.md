@@ -48,7 +48,7 @@ sequenceDiagram
     Controller->>Service: Approve(invoiceId, session username) [D]
     Service->>Store: GetById(invoiceId) [E, G]
     Store-->>Service: Invoice [G]
-    Note over Service: Require PendingApproval; set status, approver, UTC time [E]
+    Note over Service: Require PendingApproval and set approval fields [E]
     Service->>Store: Update(invoice) [E, G]
     Store-->>Service: Return [G]
     Service-->>Controller: Approved invoice [E]
@@ -63,23 +63,24 @@ and [E].
 ## Provisional target container view
 
 Dashed boxes and arrows are **planned, not implemented**. This is a conceptual
-view, not an accepted submission design. The PayEx delivery mechanism,
-idempotency guarantees, audit implementation and any use of Service Bus are
-subject to the decision record. SQL and PayEx are described in [H].
+view of the proposed outbox decision in `payex-decision.md`, subject to
+confirmation of PayEx's contract and business-owner review. The audit
+implementation remains undecided. The chosen design does not include Service
+Bus. SQL and PayEx are described in [H].
 
 ```mermaid
 flowchart LR
     User["Approver [A]"]
     Browser["Browser UI [B]"]
     App["ASP.NET Core application [C]"]
-    SQL[("Azure SQL: planned persistence and audit [H]")]
-    Delivery["Payment submission mechanism: planned, design TBD [H]"]
+    SQL[("Azure SQL: planned invoices, audit and outbox [H]")]
+    Delivery["Outbox worker: proposed, not implemented"]
     PayEx["PayEx: planned external provider [H]"]
     User --> Browser
     Browser -->|"API requests [B]"| App
-    App -.->|"Planned durable invoice and audit data"| SQL
-    App -.->|"Planned approved-invoice handoff"| Delivery
-    Delivery -.->|"Planned submission"| PayEx
+    App -.->|"Planned approval, audit and outbox transaction"| SQL
+    Delivery -.->|"Planned outbox claim and status update"| SQL
+    Delivery -.->|"Planned submission with stable key"| PayEx
     classDef planned stroke-dasharray: 5 5;
     class SQL,Delivery,PayEx planned;
 ```
@@ -103,14 +104,14 @@ Paths are relative to the repository root.
 
 - The user operates the browser UI; the repository establishes the UI and
   approval action but does not document actual users or their deployment.
-- The target shows a logical payment handoff, not a chosen worker, protocol or
-  guaranteed delivery mechanism. Whether Service Bus is used is undecided.
+- The target shows a proposed outbox worker, not an implemented service or a
+  guarantee of delivery. The chosen design does not include Service Bus.
 - The target audit store is a proposed way to meet the seven-year requirement,
   not evidence that an audit design or retention mechanism exists.
 - The sequence begins after sign-in and omits the separate login exchange.
-- The Mermaid source was drafted from code inspection. Mermaid MCP was not
-  available in this session; the assignment explicitly asks for it, so that
-  tool requirement still needs to be satisfied.
+- The Mermaid source was drafted from code inspection and rendered with the
+  Mermaid MCP tool. Rendering exposed a syntax error in the original sequence
+  note; it was corrected before the final rendering.
 
 ## Architecture test
 
@@ -127,3 +128,16 @@ dotnet test backend\InvoiceApp.sln --filter FullyQualifiedName~ArchitectureTests
 
 The existing GitHub Actions workflow runs the solution tests on pull requests
 targeting `main`; use it when the .NET SDK is unavailable locally.
+
+### Recorded run
+
+On 2026-11-01, the test ran in WSL2 Debian using .NET SDK 8.0.427:
+**1 passed, 0 failed, 0 skipped**. WSL did not have ICU installed, so this run
+used invariant globalization; the SDK emitted locale warnings. The rule under
+test checks assembly references and does not depend on culture.
+
+From PowerShell at the repository root, the equivalent command is:
+
+```powershell
+wsl --cd (Join-Path (Get-Location) 'backend') --exec sh -c 'DOTNET_SYSTEM_GLOBALIZATION_INVARIANT=1 "$HOME/.dotnet/dotnet" test InvoiceApp.sln --filter FullyQualifiedName~ArchitectureTests --nologo'
+```
